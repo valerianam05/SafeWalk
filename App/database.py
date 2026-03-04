@@ -1,6 +1,6 @@
 import json
 import os
-
+import math
 FILE_PATH = "data/zones.json"
 
 def load_data():
@@ -30,3 +30,14 @@ def load_dangers():
 def save_dangers(dangers):
     with open(DANGER_FILE, "w", encoding="utf-8") as f:
         json.dump(dangers, f, indent=4, ensure_ascii=False)
+        
+def calculate_distance(lat1, lon1, lat2, lon2):
+    R = 6371.0
+    
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
+    
+    a = math.sin(dlat / 2)**2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    
+    return R * c

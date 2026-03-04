@@ -3,6 +3,8 @@ from models import SafeZone
 from models import  DangerReport
 from database import load_data, save_data
 from database import load_data, save_data, load_dangers, save_dangers
+from database import load_data, calculate_distance 
+
 
 router = APIRouter()
 
@@ -49,3 +51,21 @@ def report_danger(danger: DangerReport):
     dangers.append(danger.dict())
     save_dangers(dangers)   
     return {"status": "success", "message": "Alerte de danger enregistrée !"}
+
+
+
+@router.get("/zones/closest")
+def get_closest_zone(user_lat: float, user_lon: float):
+    zones = load_data()
+    if not zones:
+        raise HTTPException(status_code=404, detail="Aucune zone enregistrée")
+
+    closest = min(
+        zones, 
+        key=lambda z: calculate_distance(user_lat, user_lon, z['latitude'], z['longitude'])
+    )
+    
+    distance = calculate_distance(user_lat, user_lon, closest['latitude'], closest['longitude'])
+    closest["distance_km"] = round(distance, 2)
+    
+    return closest
