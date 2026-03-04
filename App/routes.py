@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 from models import SafeZone 
+from models import  DangerReport
 from database import load_data, save_data
+from database import load_data, save_data, load_dangers, save_dangers
 
 router = APIRouter()
 
@@ -36,3 +38,14 @@ def delete_zone(zone_id: int):
         
     save_data(new_zones)
     return {"message": f"Zone {zone_id} supprimée avec succès"}
+
+
+@router.get("/dangers")
+def get_all_dangers():
+    return load_dangers()  
+@router.post("/dangers")
+def report_danger(danger: DangerReport):
+    dangers = load_dangers() 
+    dangers.append(danger.dict())
+    save_dangers(dangers)   
+    return {"status": "success", "message": "Alerte de danger enregistrée !"}
