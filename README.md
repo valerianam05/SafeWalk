@@ -1,7 +1,7 @@
 # SafeWalk API
 
 Ce projet est une API de sécurité urbaine développée avec **FastAPI**. 
-Mon objectif principal était d'apprendre à construire une API robuste en Python, en gérant la persistance des données et la logique géographique.
+Mon objectif principal était d'apprendre à construire une API en Python, en gérant la persistance des données et la logique géographique.
 
 ## Objectifs d'apprentissage
 - Création de routes API (GET, POST, DELETE) avec **FastAPI**.

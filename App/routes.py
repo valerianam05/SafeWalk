@@ -24,10 +24,15 @@ def create_zone(zone: SafeZone):
     return {"status": "success", "message": "Zone enregistrée sur le disque !"}
 
 
+# 1. Ta fonction de recherche améliorée (Nom OU Quartier)
 @router.get("/zones/search")
 def search_zones(query: str):
     zones = load_data()
-    results = [z for z in zones if query.lower() in z['nom'].lower()]
+    # On cherche si la requête est dans le nom OU dans le quartier
+    results = [
+        z for z in zones 
+        if query.lower() in z['nom'].lower() or query.lower() in z['quartier'].lower()
+    ]
     return results
 
 @router.delete("/zones/{zone_id}")
@@ -39,7 +44,7 @@ def delete_zone(zone_id: int):
         raise HTTPException(status_code=404, detail="Zone non trouvée")
         
     save_data(new_zones)
-    return {"message": f"Zone {zone_id} supprimée avec succès"}
+    return {"status": "success", "message": f"Zone {zone_id} supprimée"}
 
 
 @router.get("/dangers")
