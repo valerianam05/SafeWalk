@@ -5,7 +5,6 @@ from database import load_data, save_data
 from database import load_data, save_data, load_dangers, save_dangers
 from database import load_data, calculate_distance 
 
-
 router = APIRouter()
 
 @router.get("/zones")
@@ -24,11 +23,9 @@ def create_zone(zone: SafeZone):
     return {"status": "success", "message": "Zone enregistrée sur le disque !"}
 
 
-# 1. Ta fonction de recherche améliorée (Nom OU Quartier)
 @router.get("/zones/search")
 def search_zones(query: str):
     zones = load_data()
-    # On cherche si la requête est dans le nom OU dans le quartier
     results = [
         z for z in zones 
         if query.lower() in z['nom'].lower() or query.lower() in z['quartier'].lower()

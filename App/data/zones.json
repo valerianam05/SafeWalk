@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "id": 1,
+        "nom": "Commissariat Central",
+        "latitude": -18.9101,
+        "longitude": 47.5255,
+        "quartier": "Analakely",
+        "is_open": true
+    },
+    {
+        "id": 2,
+        "nom": "Refuge Association Femme",
+        "latitude": -18.8792,
+        "longitude": 47.5079,
+        "quartier": "Anosy",
+        "is_open": true
+    }
+]
